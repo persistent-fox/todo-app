@@ -1,19 +1,35 @@
-import { FC, ReactNode, useState } from "react";
+import { ChangeEvent, FC, ReactNode, useState } from "react";
 import { TextField } from "../text-field/text-field";
 import styled from "styled-components";
 
 type TEditableTitleProps = {
 	children: ReactNode;
+	onUpdateTitle: () => void;
+	onHandleChange: (e: ChangeEvent<HTMLInputElement>) => void;
+	taskTitle: string;
 };
 
-export const EditableTitle: FC<TEditableTitleProps> = ({ children }) => {
+export const EditableTitle: FC<TEditableTitleProps> = ({ taskTitle, onUpdateTitle, onHandleChange, children }) => {
 	const [isEdited, setIsEdited] = useState(false);
-	const onHandleEdit = () => {
-		setIsEdited(prevState => !prevState);
+
+	const onHandleFocus = () => {
+		setIsEdited(true);
 	};
+
+	const onHandleBlur = () => {
+		setIsEdited(false);
+		onUpdateTitle();
+	};
+
 	return (
 		<SEditableTitle>
-			<span onDoubleClick={onHandleEdit}>{isEdited ? <TextField onBlur={onHandleEdit} autoFocus /> : children}</span>
+			<span onDoubleClick={onHandleFocus}>
+				{isEdited ? (
+					<TextField onChange={onHandleChange} value={taskTitle} onBlur={onHandleBlur} autoFocus />
+				) : (
+					children
+				)}
+			</span>
 		</SEditableTitle>
 	);
 };

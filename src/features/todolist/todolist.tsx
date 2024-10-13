@@ -2,30 +2,40 @@ import styled from "styled-components";
 import { FlexWrapper } from "../../components/styled/flex-wrapper";
 import { Button } from "../../components/button/button";
 import { TasksList } from "./tasks-list/tasks-list";
-import { EditableTitle, SEditableTitle } from "../../components/editable-title/editable-title";
+import { SEditableTitle } from "../../components/editable-title/editable-title";
+import { useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "../../store/store";
+import { getTasksTC, setPriorityFilter } from "../../store/reducers/tasks-reducer";
+import { Filters } from "./filters/filters";
+import { activeTasksCount } from "../../store/selectors/tasks-selectors";
 
 export const TodoList = () => {
+	const dispatch = useAppDispatch();
+	const count = useAppSelector(activeTasksCount);
+
+	const onChangePriorityFilter = () => {
+		dispatch(setPriorityFilter());
+	};
+
+	useEffect(() => {
+		dispatch(getTasksTC());
+	}, [dispatch]);
+
 	return (
 		<STodolist>
-			<EditableTitle>
-				<Title>Todolist</Title>
-			</EditableTitle>
+			<Title>Todolist</Title>
 			<TasksList />
 			<FlexWrapper justify='space-between'>
-				<CountInfo>2 items left</CountInfo>
-				<FlexWrapper gap='12px'>
-					<Button isActive>All</Button>
-					<Button>Active</Button>
-					<Button>Completed</Button>
-				</FlexWrapper>
-				<Button>Clear Completed</Button>
+				<CountInfo>Active tasks: {count}</CountInfo>
+				<Filters />
+				<Button onClick={onChangePriorityFilter}>Priority</Button>
 			</FlexWrapper>
 		</STodolist>
 	);
 };
 
 const STodolist = styled.div`
-	max-width: 550px;
+	max-width: 800px;
 	width: 100%;
 	padding: 10px;
 	border-radius: 5px;

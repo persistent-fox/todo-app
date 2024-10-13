@@ -7,7 +7,7 @@ type TButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
 };
 
 export const Button: FC<TButtonProps> = ({ variant, isActive, ...props }) => {
-	return <SButton isActive={Number(isActive)} {...props} />;
+	return <SButton $isActive={Number(isActive)} {...props} />;
 };
 
 const SButton = styled.button<SButtonProps>`
@@ -17,7 +17,7 @@ const SButton = styled.button<SButtonProps>`
 	border-radius: 5px;
 	font-weight: 400;
 	${props =>
-		props.isActive &&
+		props.$isActive &&
 		css`
 			border-color: ${props => props.theme.colors.accent};
 		`}
@@ -25,5 +25,5 @@ const SButton = styled.button<SButtonProps>`
 
 // types
 type SButtonProps = {
-	isActive: number;
+	$isActive: number;
 };
