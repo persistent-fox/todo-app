@@ -3,7 +3,7 @@ export const lightTheme = {
 		primary: "#ffffff",
 		secondary: "#ffe377",
 		accent: "#9db9cd",
-		tertiary: "#2B2B2B",
+		tertiary: "#7ca5c3",
 		errors: "#ff7171",
 		status: {
 			succeed: "#8db82b",
@@ -17,6 +17,7 @@ export const lightTheme = {
 			dark: "#767676",
 		},
 		text: {
+			primary: "#ffffff",
 			dark: "#3a3d3f",
 			tertiary: "#5c7282",
 		},

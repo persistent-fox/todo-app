@@ -1,5 +1,6 @@
 import { FC, InputHTMLAttributes } from "react";
 import styled from "styled-components";
+import { font } from "../../styles/common";
 
 type TTextFieldProps = InputHTMLAttributes<HTMLInputElement> & {};
 
@@ -16,6 +17,12 @@ const Field = styled.input`
 	padding: 5px 10px;
 	border: none;
 	border-radius: 4px;
+	${font({
+		weight: 400,
+		Fmin: 12,
+		Fmax: 30,
+	})};
+	color: ${props => props.theme.colors.text.dark};
 	background-color: ${props => props.theme.colors.grey.light};
 	&:focus-visible {
 		outline: none;

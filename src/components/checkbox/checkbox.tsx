@@ -1,15 +1,18 @@
-import { FC, InputHTMLAttributes } from "react";
+import { DetailedHTMLProps, FC, InputHTMLAttributes } from "react";
 import srcImg from "./../../assets/arrow.svg";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
-export type TCheckboxProps = InputHTMLAttributes<HTMLInputElement> & {
+type DefaultInputPropsType = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>;
+
+export type TCheckboxProps = Omit<DefaultInputPropsType, "type"> & {
 	label?: string;
+	type?: "checkbox" | "radio";
 };
 
-export const Checkbox: FC<TCheckboxProps> = ({ label, ...props }) => {
+export const Checkbox: FC<TCheckboxProps> = ({ label, type = "checkbox", ...props }) => {
 	return (
 		<Label>
-			<Input type='checkbox' {...props} />
+			<Input $variant={type} type={type} {...props} />
 			<FakeCheckbox></FakeCheckbox>
 			{label}
 		</Label>
@@ -33,7 +36,7 @@ export const FakeCheckbox = styled.span`
 	padding: 2px;
 `;
 
-export const Input = styled.input`
+export const Input = styled.input<TInputProps>`
 	position: absolute;
 	width: 1px;
 	height: 1px;
@@ -48,4 +51,25 @@ export const Input = styled.input`
 		left: 50%;
 		transform: translate(-50%, -50%);
 	}
+	${props =>
+		props.$variant === "radio" &&
+		css`
+			&:checked + ${FakeCheckbox}::after {
+				content: "";
+				display: block;
+				width: 16px;
+				height: 16px;
+				background-color: ${props => props.theme.colors.accent};
+				border-radius: 50%;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+			}
+		`}
 `;
+
+//types
+
+type TInputProps = {
+	$variant: "checkbox" | "radio";
+};

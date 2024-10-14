@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { FlexWrapper } from "../../components/styled/flex-wrapper";
 import { Button } from "../../components/button/button";
 import { TasksList } from "./tasks-list/tasks-list";
@@ -7,11 +7,15 @@ import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../store/store";
 import { getTasksTC, setPriorityFilter } from "../../store/reducers/tasks-reducer";
 import { Filters } from "./filters/filters";
-import { activeTasksCount } from "../../store/selectors/tasks-selectors";
+import { activeTasksCount, priorityFilterSelect } from "../../store/selectors/tasks-selectors";
+import { CreateTaskForm } from "./create-task-form/create-task-form";
+import { Arrow } from "../../components/icons/arrow";
+import { TaskSkeleton } from "./tasks-list/task/task-skeleton/task-skeleton";
 
 export const TodoList = () => {
 	const dispatch = useAppDispatch();
 	const count = useAppSelector(activeTasksCount);
+	const priorityFilter = useAppSelector(priorityFilterSelect);
 
 	const onChangePriorityFilter = () => {
 		dispatch(setPriorityFilter());
@@ -24,11 +28,22 @@ export const TodoList = () => {
 	return (
 		<STodolist>
 			<Title>Todolist</Title>
-			<TasksList />
-			<FlexWrapper justify='space-between'>
+			<CreateTaskForm />
+			<div>
+				<TaskSkeleton />
+				<TaskSkeleton />
+				<TaskSkeleton />
+			</div>
+			{/* <TasksList /> */}
+			<FlexWrapper wrap='wrap' justify='space-between'>
 				<CountInfo>Active tasks: {count}</CountInfo>
 				<Filters />
-				<Button onClick={onChangePriorityFilter}>Priority</Button>
+				<Button onClick={onChangePriorityFilter}>
+					<span>Priority</span>
+					<ArrowOrder $priorityFilter={priorityFilter}>
+						<Arrow size={20} color='#5c7282' />
+					</ArrowOrder>
+				</Button>
 			</FlexWrapper>
 		</STodolist>
 	);
@@ -59,3 +74,17 @@ const CountInfo = styled.span`
 	border-radius: 5px;
 	font-weight: 400;
 `;
+
+const ArrowOrder = styled.span<TArrowOrderProps>`
+	${props =>
+		props.$priorityFilter === "desc" &&
+		css`
+			transform: rotateX(180deg);
+		`}
+`;
+
+//types
+
+type TArrowOrderProps = {
+	$priorityFilter: "desc" | "asc";
+};

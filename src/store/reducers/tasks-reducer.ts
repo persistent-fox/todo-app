@@ -78,6 +78,10 @@ export const getTasksTC = () => (dispatch: Dispatch) => {
 	tasksAPI.getTasks().then(res => dispatch(setTasks(res.data)));
 };
 
+export const addTasksTC = (task: TTask) => (dispatch: Dispatch) => {
+	tasksAPI.createTask(task).then(res => dispatch(addTask(res.data)));
+};
+
 export const updateTaskTC = (task: TTask) => (dispatch: Dispatch) => {
 	tasksAPI.updateTask(task).then(res => dispatch(updateTask(res.data)));
 };
