@@ -24,7 +24,7 @@ export const Task: FC<TTaskProps> = ({ task }) => {
 
 	const onUpdateTitle = () => {
 		if (task.title !== title && title.trim().length > 4) {
-			// добавила catch в случае ошибки на сервере, чтобы вернуть title неизмененным
+			// так как dispatch возвращает промис, поэтому я добавила catch в случае ошибки на сервере, чтобы вернуть title неизмененным
 			dispatch(updateTaskTC(task.id, { ...task, title })).catch(() => setTitle(task.title));
 		} else {
 			setTitle(task.title);

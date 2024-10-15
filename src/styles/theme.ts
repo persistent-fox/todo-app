@@ -4,6 +4,7 @@ export const lightTheme = {
 		secondary: "#ffe377",
 		accent: "#9db9cd",
 		tertiary: "#7ca5c3",
+		default: "#9bd5ff",
 		errors: "#ff7171",
 		status: {
 			succeed: "#8db82b",

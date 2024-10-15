@@ -19,13 +19,6 @@ export const Checkbox: FC<TCheckboxProps> = ({ label, type = "checkbox", ...prop
 	);
 };
 
-export const Label = styled.label`
-	display: flex;
-	align-items: center;
-	gap: 10px;
-	cursor: pointer;
-`;
-
 export const FakeCheckbox = styled.span`
 	position: relative;
 	display: block;
@@ -34,6 +27,11 @@ export const FakeCheckbox = styled.span`
 	border-radius: 50%;
 	border: 2px solid ${props => props.theme.colors.accent};
 	padding: 2px;
+	transition: all 0.3s;
+	font-size: 25px;
+	&:hover {
+		border: 2px solid ${props => props.theme.colors.default};
+	}
 `;
 
 export const Input = styled.input<TInputProps>`
@@ -45,11 +43,12 @@ export const Input = styled.input<TInputProps>`
 	&:checked + ${FakeCheckbox}::after {
 		content: url(${srcImg});
 		position: absolute;
+		display: block;
 		width: 18px;
 		height: 18px;
-		top: 50%;
+		top: -5px;
 		left: 50%;
-		transform: translate(-50%, -50%);
+		transform: translateX(-50%);
 	}
 	${props =>
 		props.$variant === "radio" &&
@@ -73,8 +72,14 @@ export const Input = styled.input<TInputProps>`
 	}
 `;
 
-//types
+export const Label = styled.label`
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	cursor: pointer;
+`;
 
+//types
 type TInputProps = {
 	$variant: "checkbox" | "radio";
 };

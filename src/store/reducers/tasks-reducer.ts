@@ -174,7 +174,7 @@ export const deleteTaskTC = (taskId: string) => (dispatch: Dispatch) => {
 };
 
 //types
-type TTasksState = {
+export type TTasksState = {
 	tasks: TTaskResponse[];
 	filter: TFilters;
 	priorityFilter: TSortOrder;
