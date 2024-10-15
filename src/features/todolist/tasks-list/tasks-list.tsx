@@ -1,8 +1,8 @@
 import { Task } from "./task/task";
-import styled from "styled-components";
 import { useAppSelector } from "../../../store/store";
 import { filterSelect, priorityFilterSelect, tasksSelect } from "../../../store/selectors/tasks-selectors";
-import { TTask } from "../../../store/reducers/tasks-reducer";
+import { TTaskResponse } from "../../../store/reducers/tasks-reducer";
+import { S } from "./tasks-list.styled";
 
 export const TasksList = () => {
 	const tasks = useAppSelector(tasksSelect);
@@ -10,7 +10,7 @@ export const TasksList = () => {
 	const currentFilter = useAppSelector(filterSelect);
 
 	const filteredTasks = () => {
-		let filteredAndSortedTasks: TTask[] = [];
+		let filteredAndSortedTasks: TTaskResponse[] = [];
 		switch (currentFilter) {
 			case "active":
 				filteredAndSortedTasks = tasks.filter(t => !t.isDone);
@@ -28,18 +28,8 @@ export const TasksList = () => {
 	};
 
 	return (
-		<STaskList>
-			{filteredTasks()?.map(t => (
-				<Task key={t.id} task={t} />
-			))}
-		</STaskList>
+		<S.TaskList>
+			{tasks.length ? filteredTasks().map(t => <Task key={t.id} task={t} />) : <S.EmptyList>Список пуст</S.EmptyList>}
+		</S.TaskList>
 	);
 };
-
-export const STaskList = styled.ul`
-	display: flex;
-	flex-direction: column;
-	gap: 10px;
-	width: 100%;
-	margin-bottom: 20px;
-`;

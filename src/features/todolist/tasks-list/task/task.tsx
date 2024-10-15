@@ -1,13 +1,16 @@
 import { ChangeEvent, FC, useState } from "react";
 import { Checkbox } from "../../../../components/checkbox/checkbox";
 import { Flag } from "../../../../components/icons";
-import { TPriorities, TTask, updateTaskTC } from "../../../../store/reducers/tasks-reducer";
-import styled, { css } from "styled-components";
+import { deleteTaskTC, TTaskResponse, updateTaskTC } from "../../../../store/reducers/tasks-reducer";
 import { EditableTitle } from "../../../../components/editable-title/editable-title";
 import { useAppDispatch } from "../../../../store/store";
+import { Loader } from "../../../../components/styled/loader";
+import { Trash } from "../../../../components/icons/trash";
+import { S } from "./task.styled";
+import { Toast } from "../../../../components/toast/toast";
 
 type TTaskProps = {
-	task: TTask;
+	task: TTaskResponse;
 };
 
 export const Task: FC<TTaskProps> = ({ task }) => {
@@ -15,11 +18,17 @@ export const Task: FC<TTaskProps> = ({ task }) => {
 
 	const dispatch = useAppDispatch();
 	const onChangeStatus = (event: ChangeEvent<HTMLInputElement>) => {
-		dispatch(updateTaskTC({ ...task, isDone: event.target.checked }));
+		if (task.status === "loading") return;
+		dispatch(updateTaskTC(task.id, { ...task, isDone: event.target.checked })).catch();
 	};
 
 	const onUpdateTitle = () => {
-		dispatch(updateTaskTC({ ...task, title }));
+		if (task.title !== title && title.trim().length > 4) {
+			// добавила catch в случае ошибки на сервере, чтобы вернуть title неизмененным
+			dispatch(updateTaskTC(task.id, { ...task, title })).catch(() => setTitle(task.title));
+		} else {
+			setTitle(task.title);
+		}
 	};
 
 	const onHandleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -27,68 +36,34 @@ export const Task: FC<TTaskProps> = ({ task }) => {
 		setTitle(newTitle);
 	};
 
+	const onDeleteTask = () => {
+		if (task.status === "loading") return;
+		dispatch(deleteTaskTC(task.id));
+	};
+
 	return (
-		<STask>
-			<Checkbox checked={task.isDone} onChange={onChangeStatus} />
-			<EditableTitle onHandleChange={onHandleChange} onUpdateTitle={onUpdateTitle} taskTitle={title}>
-				<Title $isDone={task.isDone}>{title}</Title>
+		<S.Task $disabled={task.status}>
+			{task.status === "loading" ? (
+				<S.Loading>
+					<Loader size={16} color='#e8e8e8' />
+				</S.Loading>
+			) : null}
+			<Checkbox disabled={task.status === "loading"} checked={task.isDone} onChange={onChangeStatus} />
+			<EditableTitle
+				taskStatus={task.status}
+				onHandleChange={onHandleChange}
+				onUpdateTitle={onUpdateTitle}
+				taskTitle={title}
+			>
+				<S.Title $isDone={task.isDone}>{title}</S.Title>
 			</EditableTitle>
-			<Priority $priority={task.priority}>
+			<S.Priority $priority={task.priority}>
 				<Flag size={20} />
-			</Priority>
-		</STask>
+			</S.Priority>
+			<S.DeleteButton onClick={onDeleteTask}>
+				<Trash size={20} />
+			</S.DeleteButton>
+			{task.error ? <Toast message={task.error || ""} /> : null}
+		</S.Task>
 	);
-};
-
-const STask = styled.li`
-	display: flex;
-	align-items: center;
-	gap: 20px;
-	padding: 10px;
-	border-bottom: 1px solid ${props => props.theme.colors.grey.medium};
-`;
-
-const Title = styled.h4<TTitleProps>`
-	font-weight: 400;
-	color: ${props => props.theme.colors.text.dark};
-	${props =>
-		props.$isDone &&
-		css`
-			color: ${props => props.theme.colors.text.tertiary};
-			text-decoration: line-through;
-		`}
-`;
-
-const Priority = styled.div<TPriority>`
-	svg {
-		path {
-			fill: ${props => props.theme.colors.status.error};
-		}
-	}
-	${props =>
-		props.$priority === 0 &&
-		css`
-			svg {
-				path {
-					fill: ${props => props.theme.colors.status.succeed};
-				}
-			}
-		`}
-	${props =>
-		props.$priority === 1 &&
-		css`
-			svg {
-				path {
-					fill: ${props => props.theme.colors.status.warning};
-				}
-			}
-		`}
-`;
-
-type TPriority = {
-	$priority: TPriorities;
-};
-
-type TTitleProps = {
-	$isDone: boolean;
 };

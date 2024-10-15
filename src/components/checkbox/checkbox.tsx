@@ -29,10 +29,10 @@ export const Label = styled.label`
 export const FakeCheckbox = styled.span`
 	position: relative;
 	display: block;
-	width: 24px;
-	height: 24px;
+	width: 22px;
+	height: 22px;
 	border-radius: 50%;
-	border: 2px solid ${props => props.theme.colors.grey.medium};
+	border: 2px solid ${props => props.theme.colors.accent};
 	padding: 2px;
 `;
 
@@ -45,8 +45,8 @@ export const Input = styled.input<TInputProps>`
 	&:checked + ${FakeCheckbox}::after {
 		content: url(${srcImg});
 		position: absolute;
-		width: 20px;
-		height: 20px;
+		width: 18px;
+		height: 18px;
 		top: 50%;
 		left: 50%;
 		transform: translate(-50%, -50%);
@@ -57,8 +57,8 @@ export const Input = styled.input<TInputProps>`
 			&:checked + ${FakeCheckbox}::after {
 				content: "";
 				display: block;
-				width: 16px;
-				height: 16px;
+				width: 12px;
+				height: 12px;
 				background-color: ${props => props.theme.colors.accent};
 				border-radius: 50%;
 				top: 50%;
@@ -66,6 +66,11 @@ export const Input = styled.input<TInputProps>`
 				transform: translate(-50%, -50%);
 			}
 		`}
+	&:disabled + ${FakeCheckbox} {
+		cursor: default;
+		opacity: 0.6;
+		border-color: ${props => props.theme.colors.grey.medium};
+	}
 `;
 
 //types

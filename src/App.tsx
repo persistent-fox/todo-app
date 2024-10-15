@@ -18,7 +18,7 @@ function App() {
 			<GlobalStyles theme={theme} />
 			<div className='App'>
 				<Container>
-					<Title>Test task</Title>
+					<Title>Mindbox</Title>
 					<FlexWrapper justify='center'>
 						<TodoList />
 					</FlexWrapper>

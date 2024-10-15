@@ -3,7 +3,6 @@ import { Button } from "../../../components/button/button";
 import styled from "styled-components";
 import { useAppDispatch } from "../../../store/store";
 import { addTasksTC, TTask } from "../../../store/reducers/tasks-reducer";
-import { v1 } from "uuid";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { FlexWrapper } from "../../../components/styled/flex-wrapper";
 import { Checkbox } from "../../../components/checkbox/checkbox";
@@ -13,10 +12,11 @@ import { ValidationError } from "../../../components/validation-error/validation
 
 export const CreateTaskForm = () => {
 	const [formData, setFormData] = useState<TTask>({
-		id: v1(),
 		title: "",
 		isDone: false,
 		priority: 0,
+		status: "idle",
+		error: null,
 	});
 	const [error, setError] = useState<string | null>(null);
 
@@ -41,11 +41,9 @@ export const CreateTaskForm = () => {
 
 	const onAddTask = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		console.log("formData", formData);
 
 		if (formData.title.trim().length > 90) {
 			setError("Задача не должна содержать больше 90 символов");
-			console.log("задача не должна содержать больше 90 символов");
 		} else {
 			dispatch(addTasksTC(formData));
 			setFormData({

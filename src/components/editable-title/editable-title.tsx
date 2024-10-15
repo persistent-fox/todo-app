@@ -1,18 +1,27 @@
 import { ChangeEvent, FC, ReactNode, useState } from "react";
 import { TextField } from "../text-field/text-field";
 import styled from "styled-components";
+import { RequestStatusType } from "../../store/reducers/tasks-reducer";
 
 type TEditableTitleProps = {
 	children: ReactNode;
 	onUpdateTitle: () => void;
 	onHandleChange: (e: ChangeEvent<HTMLInputElement>) => void;
 	taskTitle: string;
+	taskStatus: RequestStatusType;
 };
 
-export const EditableTitle: FC<TEditableTitleProps> = ({ taskTitle, onUpdateTitle, onHandleChange, children }) => {
+export const EditableTitle: FC<TEditableTitleProps> = ({
+	taskStatus,
+	taskTitle,
+	onUpdateTitle,
+	onHandleChange,
+	children,
+}) => {
 	const [isEdited, setIsEdited] = useState(false);
 
 	const onHandleFocus = () => {
+		if (taskStatus === "loading") return;
 		setIsEdited(true);
 	};
 

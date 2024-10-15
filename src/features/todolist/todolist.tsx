@@ -1,21 +1,29 @@
-import styled, { css } from "styled-components";
 import { FlexWrapper } from "../../components/styled/flex-wrapper";
 import { Button } from "../../components/button/button";
-import { TasksList } from "./tasks-list/tasks-list";
-import { SEditableTitle } from "../../components/editable-title/editable-title";
+
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../store/store";
 import { getTasksTC, setPriorityFilter } from "../../store/reducers/tasks-reducer";
 import { Filters } from "./filters/filters";
-import { activeTasksCount, priorityFilterSelect } from "../../store/selectors/tasks-selectors";
+import {
+	activeTasksCount,
+	priorityFilterSelect,
+	tasksStatusSelect,
+	errorSelect,
+} from "../../store/selectors/tasks-selectors";
 import { CreateTaskForm } from "./create-task-form/create-task-form";
 import { Arrow } from "../../components/icons/arrow";
 import { TaskSkeleton } from "./tasks-list/task/task-skeleton/task-skeleton";
+import { TasksList } from "./tasks-list/tasks-list";
+import { S } from "./todolist.styled";
+import { Toast } from "../../components/toast/toast";
 
 export const TodoList = () => {
 	const dispatch = useAppDispatch();
 	const count = useAppSelector(activeTasksCount);
+	const tasksStatus = useAppSelector(tasksStatusSelect);
 	const priorityFilter = useAppSelector(priorityFilterSelect);
+	const tasksError = useAppSelector(errorSelect);
 
 	const onChangePriorityFilter = () => {
 		dispatch(setPriorityFilter());
@@ -26,65 +34,29 @@ export const TodoList = () => {
 	}, [dispatch]);
 
 	return (
-		<STodolist>
-			<Title>Todolist</Title>
+		<S.Todolist>
+			<S.Title>Todolist</S.Title>
 			<CreateTaskForm />
-			<div>
-				<TaskSkeleton />
-				<TaskSkeleton />
-				<TaskSkeleton />
-			</div>
-			{/* <TasksList /> */}
+			{tasksStatus === "loading" ? (
+				<div>
+					<TaskSkeleton />
+					<TaskSkeleton />
+					<TaskSkeleton />
+				</div>
+			) : (
+				<TasksList />
+			)}
 			<FlexWrapper wrap='wrap' justify='space-between'>
-				<CountInfo>Active tasks: {count}</CountInfo>
+				<S.CountInfo>Active tasks: {count}</S.CountInfo>
 				<Filters />
 				<Button onClick={onChangePriorityFilter}>
 					<span>Priority</span>
-					<ArrowOrder $priorityFilter={priorityFilter}>
+					<S.ArrowOrder $priorityFilter={priorityFilter}>
 						<Arrow size={20} color='#5c7282' />
-					</ArrowOrder>
+					</S.ArrowOrder>
 				</Button>
 			</FlexWrapper>
-		</STodolist>
+			{tasksError ? <Toast message={tasksError || ""} /> : null}
+		</S.Todolist>
 	);
-};
-
-const STodolist = styled.div`
-	max-width: 800px;
-	width: 100%;
-	padding: 10px;
-	border-radius: 5px;
-	background-color: ${props => props.theme.colors.primary};
-	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05), 0 6px 20px rgba(0, 0, 0, 0.1);
-	${SEditableTitle} {
-		flex-grow: 1;
-	}
-`;
-
-const Title = styled.h2`
-	text-align: center;
-	color: ${props => props.theme.colors.text.tertiary};
-	margin-bottom: 20px;
-`;
-
-const CountInfo = styled.span`
-	padding: 4px 10px;
-	color: ${props => props.theme.colors.text.tertiary};
-	border: 1px solid transparent;
-	border-radius: 5px;
-	font-weight: 400;
-`;
-
-const ArrowOrder = styled.span<TArrowOrderProps>`
-	${props =>
-		props.$priorityFilter === "desc" &&
-		css`
-			transform: rotateX(180deg);
-		`}
-`;
-
-//types
-
-type TArrowOrderProps = {
-	$priorityFilter: "desc" | "asc";
 };

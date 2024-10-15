@@ -1,4 +1,4 @@
-import { TPriorities } from "../store/reducers/tasks-reducer";
+import { EPriorities } from "../store/reducers/tasks-reducer";
 
 export const priorityButtons: TPriorityButton[] = [
 	{
@@ -25,5 +25,5 @@ type TPriorityButton = {
 	id: number;
 	title: string;
 	name: string;
-	value: TPriorities;
+	value: EPriorities;
 };
