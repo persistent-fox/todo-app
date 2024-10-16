@@ -7,4 +7,4 @@
 
 ## Здесь можно посмотреть как выглядит сам todo-app
 
-Откройте [https://persistent-fox.github.io/todo-app/](Todo-app) чтобы увидеть приложение
+Откройте [Todo-app](https://persistent-fox.github.io/todo-app/) чтобы увидеть приложение
