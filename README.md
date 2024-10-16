@@ -7,4 +7,4 @@
 
 ## Здесь можно посмотреть как выглядит сам todo-app
 
-Откройте [[http://localhost:3000](https://persistent-fox.github.io/todo-app/)](Todo-app) чтобы увидеть приложение
+Откройте [https://persistent-fox.github.io/todo-app/](Todo-app) чтобы увидеть приложение
