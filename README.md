@@ -1,46 +1,27 @@
-# Getting Started with Create React App
+# Todo-app with React, Redux, Typescript
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+- Я использовала чистый Redux, так как в тестовом задании было четко указано использовать именно его, а не Toolkit.
+- В моем проекте используется mockapi для создания временных фейковых запросов на сервер
+- Тесты написаны для tasks-reducer
+- Я использовала styled-components для стилизации компонентов
 
-## Available Scripts
+## Здесь можно посмотреть как выглядит сам todo-app
 
-In the project directory, you can run:
+Откройте [Todo-app](https://persistent-fox.github.io/todo-app/) чтобы увидеть приложение
 
-### `npm start`
+## Реализованные функции
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- создание задачи с приоритетом
+- изменение статуса выполнения задачи
+- удаление задачи
+- возможность отсортировать задачи по приоритетам
+- возможность отсортировать задачи по выполненным/невыполненным задачам, включая приоритет
+- изменение заголовка для задачи с помощью double-клика
+- отображение количества выполненных задач
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Особенности
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+- обработана ошибка, в случае обновления заголовка для задачи. Сначала заголовок меняется на новый, но в случае, если с сервера приходит ошибка, то заголовок вновь меняется на старый. Здесь использован оптимистичный подход к изменению заголовка.
+- при изменении задачи (статус, заголовок, удаление) пока не придет ответ от сервера будет запрещено изменять задачу
+- нельзя создать задачу с количеством символов меньше 5
+- если при изменении заголовка задачи не меняется заголовок, то запрос на сервер не отправляется, задача остается неизменной
