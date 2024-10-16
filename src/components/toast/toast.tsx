@@ -1,4 +1,4 @@
-import React, { useState, useEffect, memo } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
 type ToastProps = {
@@ -6,7 +6,7 @@ type ToastProps = {
 	duration?: number;
 };
 
-export const Toast: React.FC<ToastProps> = memo(({ message, duration = 3000 }) => {
+export const Toast: React.FC<ToastProps> = ({ message, duration = 3000 }) => {
 	const [show, setShow] = useState(true);
 
 	useEffect(() => {
@@ -25,7 +25,7 @@ export const Toast: React.FC<ToastProps> = memo(({ message, duration = 3000 }) =
 			<CloseButton onClick={() => setShow(false)}>×</CloseButton>
 		</ToastContainer>
 	);
-});
+};
 
 const ToastContainer = styled.div`
 	position: fixed;

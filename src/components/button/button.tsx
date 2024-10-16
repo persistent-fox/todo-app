@@ -1,4 +1,4 @@
-import { ButtonHTMLAttributes, FC } from "react";
+import { ButtonHTMLAttributes, FC, memo } from "react";
 import styled, { css } from "styled-components";
 
 type TVariants = "primary" | "default";
@@ -8,9 +8,9 @@ type TButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
 	isActive?: boolean;
 };
 
-export const Button: FC<TButtonProps> = ({ variant = "default", isActive, ...props }) => {
+export const Button: FC<TButtonProps> = memo(({ variant = "default", isActive, ...props }) => {
 	return <SButton $variant={variant} $isActive={Number(isActive)} {...props} />;
-};
+});
 
 const SButton = styled.button<SButtonProps>`
 	display: flex;

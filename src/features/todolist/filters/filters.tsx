@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, memo } from "react";
 import { FlexWrapper } from "../../../components/styled/flex-wrapper";
 import { Button } from "../../../components/button/button";
 import { useAppDispatch, useAppSelector } from "../../../store/store";
@@ -8,7 +8,7 @@ import { filterSelect } from "../../../store/selectors/tasks-selectors";
 
 type TFiltersProps = {};
 
-export const Filters: FC<TFiltersProps> = () => {
+export const Filters: FC<TFiltersProps> = memo(() => {
 	const dispatch = useAppDispatch();
 	const currentFilter = useAppSelector(filterSelect);
 
@@ -25,4 +25,4 @@ export const Filters: FC<TFiltersProps> = () => {
 			))}
 		</FlexWrapper>
 	);
-};
+});

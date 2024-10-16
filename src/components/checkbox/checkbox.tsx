@@ -1,4 +1,4 @@
-import { DetailedHTMLProps, FC, InputHTMLAttributes } from "react";
+import { DetailedHTMLProps, FC, InputHTMLAttributes, memo } from "react";
 import srcImg from "./../../assets/arrow.svg";
 import styled, { css } from "styled-components";
 
@@ -9,7 +9,7 @@ export type TCheckboxProps = Omit<DefaultInputPropsType, "type"> & {
 	type?: "checkbox" | "radio";
 };
 
-export const Checkbox: FC<TCheckboxProps> = ({ label, type = "checkbox", ...props }) => {
+export const Checkbox: FC<TCheckboxProps> = memo(({ label, type = "checkbox", ...props }) => {
 	return (
 		<Label>
 			<Input $variant={type} type={type} {...props} />
@@ -17,7 +17,7 @@ export const Checkbox: FC<TCheckboxProps> = ({ label, type = "checkbox", ...prop
 			{label}
 		</Label>
 	);
-};
+});
 
 export const FakeCheckbox = styled.span`
 	position: relative;

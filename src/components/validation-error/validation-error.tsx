@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, memo } from "react";
 import styled from "styled-components";
 import { font } from "../../styles/common";
 
@@ -6,9 +6,9 @@ type TValidationErrorProps = {
 	errorMessage: string;
 };
 
-export const ValidationError: FC<TValidationErrorProps> = ({ errorMessage }) => {
+export const ValidationError: FC<TValidationErrorProps> = memo(({ errorMessage }) => {
 	return <SValidationError>{errorMessage}</SValidationError>;
-};
+});
 
 const SValidationError = styled.div`
 	color: ${props => props.theme.colors.status.error};

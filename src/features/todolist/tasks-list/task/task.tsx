@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useState } from "react";
+import { ChangeEvent, FC, memo, useState } from "react";
 import { Checkbox } from "../../../../components/checkbox/checkbox";
 import { Flag } from "../../../../components/icons";
 import { deleteTaskTC, TTaskResponse, updateTaskTC } from "../../../../store/reducers/tasks-reducer";
@@ -13,7 +13,7 @@ type TTaskProps = {
 	task: TTaskResponse;
 };
 
-export const Task: FC<TTaskProps> = ({ task }) => {
+export const Task: FC<TTaskProps> = memo(({ task }) => {
 	const [title, setTitle] = useState(task.title);
 
 	const dispatch = useAppDispatch();
@@ -66,4 +66,4 @@ export const Task: FC<TTaskProps> = ({ task }) => {
 			{task.error ? <Toast message={task.error || ""} /> : null}
 		</S.Task>
 	);
-};
+});

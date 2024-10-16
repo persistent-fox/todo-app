@@ -1,7 +1,7 @@
 import { FlexWrapper } from "../../components/styled/flex-wrapper";
 import { Button } from "../../components/button/button";
 
-import { useEffect } from "react";
+import { memo, useCallback, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../store/store";
 import { getTasksTC, setPriorityFilter } from "../../store/reducers/tasks-reducer";
 import { Filters } from "./filters/filters";
@@ -18,16 +18,16 @@ import { TasksList } from "./tasks-list/tasks-list";
 import { S } from "./todolist.styled";
 import { Toast } from "../../components/toast/toast";
 
-export const TodoList = () => {
+export const TodoList = memo(() => {
 	const dispatch = useAppDispatch();
 	const count = useAppSelector(activeTasksCount);
 	const tasksStatus = useAppSelector(tasksStatusSelect);
 	const priorityFilter = useAppSelector(priorityFilterSelect);
 	const tasksError = useAppSelector(errorSelect);
 
-	const onChangePriorityFilter = () => {
+	const onChangePriorityFilter = useCallback(() => {
 		dispatch(setPriorityFilter());
-	};
+	}, [dispatch]);
 
 	useEffect(() => {
 		dispatch(getTasksTC());
@@ -59,4 +59,4 @@ export const TodoList = () => {
 			{tasksError ? <Toast message={tasksError || ""} /> : null}
 		</S.Todolist>
 	);
-};
+});

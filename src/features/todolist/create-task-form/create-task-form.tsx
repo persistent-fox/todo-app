@@ -3,14 +3,14 @@ import { Button } from "../../../components/button/button";
 import styled from "styled-components";
 import { useAppDispatch } from "../../../store/store";
 import { addTasksTC, TTask } from "../../../store/reducers/tasks-reducer";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, memo, useState } from "react";
 import { FlexWrapper } from "../../../components/styled/flex-wrapper";
 import { Checkbox } from "../../../components/checkbox/checkbox";
 import { priorityButtons } from "../../../mock/priority-buttons";
 import { isTPriority } from "../../../utils/is-tpriority";
 import { ValidationError } from "../../../components/validation-error/validation-error";
 
-export const CreateTaskForm = () => {
+export const CreateTaskForm = memo(() => {
 	const [formData, setFormData] = useState<TTask>({
 		title: "",
 		isDone: false,
@@ -80,7 +80,7 @@ export const CreateTaskForm = () => {
 			</FlexWrapper>
 		</SCreateTaskForm>
 	);
-};
+});
 
 const SCreateTaskForm = styled.form`
 	display: flex;
