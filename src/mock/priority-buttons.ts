@@ -3,19 +3,19 @@ import { EPriorities } from "../store/reducers/tasks-reducer";
 export const priorityButtons: TPriorityButton[] = [
 	{
 		id: 0,
-		title: "низкий",
+		title: "low",
 		name: "priority",
 		value: 0,
 	},
 	{
 		id: 1,
-		title: "средний",
+		title: "medium",
 		name: "priority",
 		value: 1,
 	},
 	{
 		id: 2,
-		title: "высокий",
+		title: "high",
 		name: "priority",
 		value: 2,
 	},

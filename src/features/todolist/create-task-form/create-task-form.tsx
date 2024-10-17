@@ -66,7 +66,7 @@ export const CreateTaskForm = memo(() => {
 				{error && <ValidationError errorMessage={error} />}
 			</FlexWrapper>
 			<FlexWrapper wrap='wrap' justify='end' gap='10px'>
-				Приоритет:
+				Priority:
 				{priorityButtons.map(prBtn => (
 					<Checkbox
 						onChange={onChangePriority}
