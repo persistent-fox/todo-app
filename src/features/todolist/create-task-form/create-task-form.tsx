@@ -65,7 +65,8 @@ export const CreateTaskForm = memo(() => {
 				</FlexWrapper>
 				{error && <ValidationError errorMessage={error} />}
 			</FlexWrapper>
-			<FlexWrapper justify='end' gap='10px'>
+			<FlexWrapper wrap='wrap' justify='end' gap='10px'>
+				Приоритет:
 				{priorityButtons.map(prBtn => (
 					<Checkbox
 						onChange={onChangePriority}
@@ -84,7 +85,7 @@ export const CreateTaskForm = memo(() => {
 
 const SCreateTaskForm = styled.form`
 	display: flex;
-	flex-direction: column;
+	flex-direction: column-reverse;
 	gap: 20px;
 	margin-bottom: 20px;
 `;

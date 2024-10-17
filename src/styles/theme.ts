@@ -23,8 +23,8 @@ export const lightTheme = {
 			tertiary: "#5c7282",
 		},
 		scroll: {
-			thumbDefaultSecondary: "#ffe377",
-			thumbDefaultAccent: "#ff8400",
+			thumbDefaultSecondary: "#ced0d0",
+			thumbDefaultAccent: "#9cbed1",
 			trackDefault: "transparent",
 			thumbAside: "#ffe377",
 			trackAside: "#ffffff",

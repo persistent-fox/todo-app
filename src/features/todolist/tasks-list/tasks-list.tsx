@@ -29,7 +29,11 @@ export const TasksList = () => {
 
 	return (
 		<S.TaskList>
-			{tasks.length ? filteredTasks().map(t => <Task key={t.id} task={t} />) : <S.EmptyList>Список пуст</S.EmptyList>}
+			{filteredTasks().length ? (
+				filteredTasks().map(t => <Task key={t.id} task={t} />)
+			) : (
+				<S.EmptyList>Список пуст</S.EmptyList>
+			)}
 		</S.TaskList>
 	);
 };
